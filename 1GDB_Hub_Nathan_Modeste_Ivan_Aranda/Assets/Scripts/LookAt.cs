@@ -4,9 +4,23 @@ using UnityEngine;
 
 public class LookAt : MonoBehaviour
 {
-    [SerializeField] private Transform head;
-    private void OnTriggerStay(Collider other)
+    public Transform head;
+    public bool InTrigger = false;
+    public Transform LookTarget;
+
+    public void OnTriggerStay(Collider other)
     {
-        head.LookAt(other.transform);
+        InTrigger = true;
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        InTrigger = false;
+    }
+
+    private void LateUpdate()
+    {
+        if (InTrigger == true)
+            head.LookAt(LookTarget);
     }
 }
